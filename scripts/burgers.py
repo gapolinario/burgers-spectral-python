@@ -115,22 +115,15 @@ fewx   = [0,N//10,2*N//10,3*N//10,4*N//10,5*N//10,6*N//10,7*N//10,8*N//10,9*N//1
 #git_hash = repo.head.object.hexsha[:10]
 
 # print all parameters to aux file
-all_params = {  "R": R, "BN": BN, "Lrelative": Lrelative, "Ttotal": Ttotal,
+all_params = {  "BN": BN, "Lrelative": Lrelative, "Ttotal": Ttotal,
                 "N": N, "nu": nu, "Ltotal": Ltotal, "L": L, "sqeps": sqeps,
                 "dx": dx, "NT": NT, "NTsave": NTsave,
                 "viscte": viscte, "sqdx": sqdx,
                 "cfl_const": cfl_const, "dt": dt,
                 "nlinear": nlinear, "fkernel": fkernel,
                 "initial_value": initial_value, "scheme": scheme,
-                "saveformat": saveformat#,
-                #"git_hash": git_hash
+                "saveformat": saveformat
             }
-
-# print the parameter file
-#cwd = os.getcwd()
-#if R%1000 == 0:
-#    with open(f'{cwd}/data/params_R_{R:05d}_N_{BN:03d}_Ltotal_{Ltotal:05.01f}_L_{-base2(L):03d}_sqeps_{sqeps:.06f}_nu_{-base10(nu):03d}_T_{Ttotal:.1e}_NT_{base2(Ttotal):03d}.json','w',encoding="utf-8") as file:
-#        json_dump(all_params, file)
 
 ######## SAVE PARAMETERS WITH HASH ##########
 #############################################
@@ -141,6 +134,11 @@ all_params = {  "R": R, "BN": BN, "Lrelative": Lrelative, "Ttotal": Ttotal,
 # (with very high probability, since we do not consider the full hash)
 # dumps means dump_String
 dict_hash = sha224(dumps(all_params).encode('utf-8')).hexdigest()[:10]
+
+# add these parameters to the list, they are ignored when
+# calculating the hash
+all_params["R"] = R
+all_params["dict_hash"] = dict_hash
 
 cwd = os.getcwd()
 if R%1000 == 0: # print the parameter file
@@ -387,5 +385,5 @@ for n in range(NTsave*skip):
 #repo = git.Repo(search_parent_directories=True)
 #short_hash = repo.head.object.hexsha[:10]
 
-fname = f'{cwd}/data/burgers_R_{R:05d}_N_{BN:03d}_Ltotal_{Ltotal:05.01f}_L_{-base2(L):03d}_sqeps_{sqeps:.06f}_nu_{-base10(nu):03d}_T_{Ttotal:.1e}_NT_{base2(Ttotal):03d}'
+fname = f'{cwd}/data/burgers_R_{R:05d}_{dict_hash}'
 np.savez( fname , f=fspace, u=vspace , dudx=velgrad )
