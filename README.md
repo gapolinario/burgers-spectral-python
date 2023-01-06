@@ -9,3 +9,4 @@
 6. Stochastic Burgers equation with Brehier noise
 7. Stochastic Burgers equation with JKW algorithm
 8. Database for simulations, hashlib indexing
+9. Comparison against the Chabanol-Duchon statistics for forced inviscid Burgers turbulence
