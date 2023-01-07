@@ -1,0 +1,4 @@
+data/
+*.npz
+*.json
+.ipynb_checkpoints/

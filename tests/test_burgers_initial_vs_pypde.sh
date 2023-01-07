@@ -15,7 +15,7 @@
 params='8 1. 3  1. 2 1. 100  0.1'
 # nlinear fkernel initial_value scheme saveformat
 textparams='True zero_forcing sine_initial ETD real'
-prefix=90000
+prefix=0
 
 (set -x; # prints to the screen the command being run
 python3 -O scripts/burgers.py $prefix $params $textparams

@@ -16,7 +16,7 @@
 params='4 1. 3 10. 2 1. 1000 0.1'
 # nlinear fkernel initial_value scheme
 textparams='False zero_smooth_fourier_forcing zero_initial ETD fourier'
-prefix=91
+prefix=0
 ensemble_size=300
 numcores=6
 
