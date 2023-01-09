@@ -11,11 +11,11 @@
 # on btphm4 takes ?? with 6 processors
 # then go to Test Continuous Heat.ipynb and run it
 
-# N Ltotal Lrelative Ttotal nu sqeps NTsave
-params='9 1. 3 10. 2 1. 1000 1.0'
+# N Ltotal Lrelative Ttotal nu sqeps NTsave cfl_const
+params='8 1. 3 10. 2 1. 1000 1.0'
 # nlinear fkernel initial_value scheme
 textparams='False zero_smooth_fourier_forcing zero_initial ETD fourier'
-prefix=92
+prefix=0
 ensemble_size=100
 numcores=6
 

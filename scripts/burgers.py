@@ -163,8 +163,7 @@ def getForce(f0):
 
     # new time, new forcing
 
-    #f0 = np.random.normal(size=N) * sqdx
-    f0 = np.random.normal(size=N)
+    f0 = np.random.normal(size=N) / sqdx
     f0 = sqeps * kernel * np.fft.fft(f0)
 
     return f0
