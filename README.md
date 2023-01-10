@@ -30,3 +30,17 @@ Then run the jupyter notebook
 7. Stochastic Burgers equation with JKW algorithm
 8. Database for simulations, hashlib indexing
 9. Comparison against the Chabanol-Duchon statistics for forced inviscid Burgers turbulence
+
+# Resources
+
+Packages with similar purpose as this code:
+
+[Py-PDE][https://py-pde.readthedocs.io/en/latest/]
+Python, finite differences, accepts stochastic PDEs
+
+[FourierFlows][https://fourierflows.github.io/FourierFlowsDocumentation/dev/]
+Julia, spectral, no SPDEs
+
+[Dedalus][https://dedalus-project.org/]
+Python, spectral, no SPDEs
+

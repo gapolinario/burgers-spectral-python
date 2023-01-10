@@ -319,13 +319,13 @@ elif fkernel == "zero_smooth_fourier_forcing":
 elif fkernel == "zero_forcing":
 # zero forcing
     kernel = np.zeros((N,))
-elif fkernel == "white_forcing":
+elif fkernel == "white_fourier_forcing":
 # 3. white noise in real space, defined as flat in Fourier space
 # all modes are populated, and normalized to have C_f(x=0) = 1. in real space
 # to verify this, see tests/Test Fourier and Real Space Forcing Spectra.ipynb
     kernel = np.ones(N)*np.sqrt(N)
     kernel = kernel / np.sqrt(np.count_nonzero(kernel))
-elif fkernel == "zero_white_forcing":
+elif fkernel == "zero_white_fourier_forcing":
 # 4. white noise in real space, but zero mode is zero
 # all modes are populated, and normalized to have C_f(x=0) = 1. in real space
 # to verify this, see tests/Test Fourier and Real Space Forcing Spectra.ipynb
