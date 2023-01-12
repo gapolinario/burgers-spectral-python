@@ -6,6 +6,8 @@ import sys
 import os
 from json import dump,dumps
 from hashlib import sha224
+from h5py import File
+from numpy import complex128
 
 from _functions import *
 
@@ -334,12 +336,14 @@ else:
 
 if saveformat != 'fourier' and saveformat != 'real':
     raise ValueError("Invalid save format string. Should be 'fourier' or 'real'")
+if saveformat == 'real':
+    raise NotImplementedError("Not implemented in the pytorch version")
 
-# velocity fields are saved to these arrays
-# one is well resolved in space
-fspace = tc.empty((NTsave,N),dtype=tc.complex128) # stationary evolution, spatial profile
-vspace = tc.empty((NTsave,N),dtype=tc.complex128) # stationary evolution, spatial profile
-velgrad = tc.empty((NTsave,N),dtype=tc.complex128) # stationary evolution, spatial profile
+# define output file
+# and create HDF5 dataset
+fname = f'{cwd}/data/burgers_R_{R:05d}_{dict_hash}'
+f = File(fname, 'w')
+dset = f.create_dataset(f'R_{R:05d}_{dict_hash}', (NT,N), dtype=complex128)
 
 # initial steps of the fractional equation
 # until it reaches a stationary state
@@ -366,21 +370,10 @@ for n in range(NTsave*skip):
     # check that velocity is purely real in real space
     assert tc.max(tc.imag(fft(v0))) < tol, f"velocity in real space is not real"
 
-    if saveformat == 'fourier':
-        if (n+1)%skip == 0:
-            fspace[n//skip,:]  = f0
-            vspace[n//skip,:]  = v0
-            velgrad[n//skip,:] = dudx(v0)
+    #if saveformat == 'fourier':
+    if (n+1)%skip == 0:
+        dset[n//skip,:] = v0.detach().clone().numpy()
 
-    elif saveformat == 'real':
-        if (n+1)%skip == 0:
-            fspace[n//skip,:]  = fft(f0)
-            vspace[n//skip,:]  = fft(v0)
-            velgrad[n//skip,:] = fft(dudx(v0))
-
-# get current commit short hash
-#repo = git.Repo(search_parent_directories=True)
-#short_hash = repo.head.object.hexsha[:10]
-
-fname = f'{cwd}/data/burgers_R_{R:05d}_{dict_hash}'
-tc.save( fname , vspace )
+# close dataset
+del dset
+f.close()
